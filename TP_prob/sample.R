@@ -19,6 +19,21 @@ cuantasFigus <- function(figusTotal){
   return(cantFiguras)
 }
 
+cuantasFigus1 <- function(figusTotal){
+  # Generamos album vacio
+  album <- rep(T,times=figusTotal)
+  cantFiguras <- 0
+  vacias <- figusTotal
+  while (vacias>0) {
+    figura <- sample(1:figusTotal,1,replace = T)
+    if(album[figura]){album[figura] <- F} # figura encontrada
+    vacias <- sum(album)
+    cantFiguras <- cantFiguras + 1
+  }
+  return(cantFiguras)
+}
+
+
 
 
 # Ej 7
@@ -77,10 +92,15 @@ media <- mean(resultados)
 print(paste("La cantidad de figuritas promedio para completar el album de 6 figuritas es : ", media))
 
 ## b La probabilidad de completar el album comprando 16 figuritas.
-print(paste("La probabilidad de completar el albúm comprando 16 figuritas es : ", ifelse(16/media>=1,1, 16/media)))
+k <-length(resultados[resultados<=16])
+print(paste("La probabilidad de completar el albúm comprando 16 figuritas es : ", k/1000))
 
 ## c El número de figuritas que hay que comprar para tener probabilidad del 90% de completar el álbum.
-print(paste("El número de figuritas que hay que comprar para tener probabilidad del 90% de completar el álbum es :", floor(media*0.9)))
+# ordenamos el vector
+resultados_ord <- sort(resultados)
+# Buscamos 0.9 cuantil
+k <- resultados_ord[900]
+print(paste("El número de figuritas que hay que comprar para tener probabilidad del 90% de completar el álbum es :", k))
 
 
 # Caso intermedio: consideremos ahora que el álbum es de figusTotal=640 figuritas y que las figuritas se siguen comprando individualmente.
@@ -97,8 +117,13 @@ media <- mean(resultados)
 print(paste("La cantidad de figuritas promedio para completar el album de 6 figuritas es : ", media))
 
 ## b. La probabilidad de completar el álbum comprando 300 paquetes figuritas.
-print(paste("La probabilidad de completar el álbum comprando 300 paquetes figuritas es : ", ifelse(300/media >=1, 1, 300/media)))
+k <-length(resultados[resultados<301])
+print(paste("La probabilidad de completar el álbum comprando 300 paquetes figuritas es : ", k/100))
 
 ## c El número de figuritas que hay que comprar para tener probabilidad del 90% de completar el álbum.
-print(paste("El número de paquetes que hay que comprar para tener probabilidad del 90% de completar el álbum es :", floor(media*0.9)))
+# ordenamos el vector
+resultados_ord <- sort(resultados)
+# Buscamos 0.9 cuantil
+k <- resultados_ord[90]
+print(paste("El número de paquetes que hay que comprar para tener probabilidad del 90% de completar el álbum es :", k))
 
